@@ -4,87 +4,121 @@ import '../theme/app_theme.dart';
 import 'common.dart';
 
 class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
+  final VoidCallback? onAboutTap;
+  final VoidCallback? onWorkTap;
+  const HeroSection({super.key, this.onAboutTap, this.onWorkTap});
 
   @override
   Widget build(BuildContext context) {
     final wide = isWideScreen(context);
-    final serif = AppSerif.of(context);
 
-    return ContentContainer(
-      child: Padding(
-        padding: EdgeInsets.only(
-            top: wide ? 96 : 56, bottom: wide ? 88 : 56),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    final intro = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(PortfolioData.eyebrow, style: monoLabel(context)),
+        const SizedBox(height: 20),
+        Text(
+          PortfolioData.headline,
+          style: AppDisplay.of(context).copyWith(
+            fontSize: wide ? 56 : 36,
+            fontWeight: FontWeight.w800,
+            height: 1.08,
+            letterSpacing: -1.5,
+          ),
+        ),
+        const SizedBox(height: 24),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: Text(
+            PortfolioData.intro,
+            style: const TextStyle(
+              fontSize: 15.5,
+              height: 1.6,
+              color: AppColors.muted,
+            ),
+          ),
+        ),
+        const SizedBox(height: 32),
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 18,
+          runSpacing: 12,
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  color: AppColors.accent,
-                ),
-                const SizedBox(width: 10),
-                Flexible(
-                  child: Text(
-                    PortfolioData.location.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 2.0,
-                      color: AppColors.muted,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 28),
-            Text(
-              PortfolioData.name,
-              style: serif.copyWith(
-                fontSize: wide ? 68 : 44,
-                fontWeight: FontWeight.w600,
-                height: 1.05,
-                letterSpacing: -1.0,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              PortfolioData.role,
-              style: serif.copyWith(
-                fontSize: wide ? 21 : 18,
-                fontStyle: FontStyle.italic,
-                color: AppColors.accent,
-                height: 1.35,
-              ),
-            ),
-            const SizedBox(height: 28),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 620),
-              child: Text(
-                PortfolioData.tagline,
-                style: const TextStyle(
-                  fontSize: 16.5,
-                  height: 1.65,
-                  color: AppColors.muted,
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            Wrap(
-              spacing: 28,
-              runSpacing: 12,
-              children: const [
-                TextLink(label: 'GitHub ↗', url: PortfolioData.githubUrl),
-                TextLink(label: 'LinkedIn ↗', url: PortfolioData.linkedinUrl),
-                TextLink(
-                  label: 'mohammadg248015@gmail.com',
-                  url: 'mailto:${PortfolioData.email}',
-                ),
-              ],
-            ),
+            Container(width: 34, height: 3, color: AppColors.accent),
+            Text(PortfolioData.location, style: monoLabel(context)),
+            Text('|', style: monoLabel(context)),
+            TextLink(label: 'CURRENTLY BUILDING →', onTap: onWorkTap),
           ],
+        ),
+      ],
+    );
+
+    final photo = ClipRect(
+      child: Image.asset(
+        'assets/images/portrait.png',
+        fit: BoxFit.cover,
+        filterQuality: FilterQuality.medium,
+      ),
+    );
+
+    final mindset = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('// developer mindset', style: monoLabel(context)),
+        const SizedBox(height: 18),
+        Text(
+          PortfolioData.focusCode,
+          style: AppMono.of(context).copyWith(
+            fontSize: 12.5,
+            height: 1.7,
+            color: AppColors.muted,
+          ),
+        ),
+        const SizedBox(height: 28),
+        const Divider(height: 1, thickness: 1),
+        const SizedBox(height: 24),
+        Text(
+          PortfolioData.mindset,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            height: 1.55,
+          ),
+        ),
+        const SizedBox(height: 20),
+        TextLink(label: 'MORE ABOUT ME →', onTap: onAboutTap),
+      ],
+    );
+
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: AppColors.line, width: 1)),
+      ),
+      child: ContentContainer(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: wide ? 72 : 48),
+          child: wide
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 5, child: intro),
+                    const SizedBox(width: 48),
+                    Expanded(flex: 3, child: photo),
+                    const SizedBox(width: 48),
+                    Expanded(flex: 3, child: mindset),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    intro,
+                    const SizedBox(height: 40),
+                    photo,
+                    const SizedBox(height: 40),
+                    mindset,
+                  ],
+                ),
         ),
       ),
     );

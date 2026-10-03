@@ -5,11 +5,13 @@ import 'common.dart';
 
 class NavTarget {
   final String label;
-  final GlobalKey key;
-  const NavTarget(this.label, this.key);
+  final GlobalKey? key;
+  final String? url;
+  final bool active;
+  const NavTarget(this.label, {this.key, this.url, this.active = false});
 }
 
-/// Thin masthead: name on the left, anchor navigation on the right.
+/// Monospace masthead: name on the left, nav links on the right.
 class SiteHeader extends StatelessWidget {
   final List<NavTarget> targets;
   const SiteHeader({super.key, required this.targets});
@@ -19,25 +21,26 @@ class SiteHeader extends StatelessWidget {
     final wide = isWideScreen(context);
     return Container(
       decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.accent, width: 3)),
+        border: Border(bottom: BorderSide(color: AppColors.line, width: 1)),
       ),
       child: ContentContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 22),
           child: Row(
             children: [
               Text(
-                PortfolioData.name,
-                style: AppSerif.of(context).copyWith(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
+                '${PortfolioData.name.toUpperCase()}  /  ENGINEER',
+                style: AppMono.of(context).copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.8,
                 ),
               ),
               const Spacer(),
               if (wide)
                 for (final target in targets)
                   Padding(
-                    padding: const EdgeInsets.only(left: 28),
+                    padding: const EdgeInsets.only(left: 36),
                     child: _NavButton(target: target),
                   ),
             ],
@@ -61,13 +64,18 @@ class _NavButtonState extends State<_NavButton> {
 
   @override
   Widget build(BuildContext context) {
+    final active = widget.target.active || _hovered;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
         onTap: () {
-          final ctx = widget.target.key.currentContext;
+          if (widget.target.url != null) {
+            openUrl(widget.target.url!);
+            return;
+          }
+          final ctx = widget.target.key?.currentContext;
           if (ctx != null) {
             Scrollable.ensureVisible(
               ctx,
@@ -76,13 +84,24 @@ class _NavButtonState extends State<_NavButton> {
             );
           }
         },
-        child: Text(
-          widget.target.label,
-          style: TextStyle(
-            fontSize: 13.5,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.4,
-            color: _hovered ? AppColors.accent : AppColors.muted,
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 4),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: active ? AppColors.accent : Colors.transparent,
+                width: 2.5,
+              ),
+            ),
+          ),
+          child: Text(
+            widget.target.label,
+            style: AppMono.of(context).copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.8,
+              color: AppColors.ink,
+            ),
           ),
         ),
       ),

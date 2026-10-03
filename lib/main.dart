@@ -3,10 +3,8 @@ import 'data/portfolio_data.dart';
 import 'theme/app_theme.dart';
 import 'widgets/site_header.dart';
 import 'widgets/hero_section.dart';
-import 'widgets/experience_section.dart';
-import 'widgets/ventures_section.dart';
-import 'widgets/skills_section.dart';
-import 'widgets/projects_section.dart';
+import 'widgets/work_section.dart';
+import 'widgets/journey_section.dart';
 import 'widgets/contact_section.dart';
 
 void main() {
@@ -19,7 +17,7 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '${PortfolioData.name} — Portfolio',
+      title: '${PortfolioData.fullName} — Software Engineer',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       home: const PortfolioPage(),
@@ -35,20 +33,28 @@ class PortfolioPage extends StatefulWidget {
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
+  final _workKey = GlobalKey();
   final _aboutKey = GlobalKey();
-  final _experienceKey = GlobalKey();
-  final _venturesKey = GlobalKey();
-  final _projectsKey = GlobalKey();
   final _contactKey = GlobalKey();
+
+  void _scrollTo(GlobalKey key) {
+    final ctx = key.currentContext;
+    if (ctx != null) {
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final targets = [
-      NavTarget('About', _aboutKey),
-      NavTarget('Experience', _experienceKey),
-      NavTarget('Products', _venturesKey),
-      NavTarget('Projects', _projectsKey),
-      NavTarget('Contact', _contactKey),
+      NavTarget('WORK', key: _workKey, active: true),
+      NavTarget('ABOUT', key: _aboutKey),
+      NavTarget('NOTES', url: PortfolioData.linkedinUrl),
+      NavTarget('CONTACT', key: _contactKey),
     ];
 
     return Scaffold(
@@ -56,12 +62,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
         child: Column(
           children: [
             SiteHeader(targets: targets),
-            const HeroSection(),
-            AboutSection(key: _aboutKey),
-            ExperienceSection(key: _experienceKey),
-            VenturesSection(key: _venturesKey),
-            const SkillsSection(),
-            ProjectsSection(key: _projectsKey),
+            HeroSection(
+              onAboutTap: () => _scrollTo(_aboutKey),
+              onWorkTap: () => _scrollTo(_workKey),
+            ),
+            WorkSection(key: _workKey),
+            const StatsStrip(),
+            JourneySection(key: _aboutKey),
             ContactSection(key: _contactKey),
           ],
         ),

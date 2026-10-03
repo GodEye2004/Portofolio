@@ -3,119 +3,55 @@ import '../data/portfolio_data.dart';
 import '../theme/app_theme.dart';
 import 'common.dart';
 
+/// Light footer: copyright left, slash-separated links right,
+/// trailing accent dash — matching the mockup.
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final wide = isWideScreen(context);
-    return Container(
-      width: double.infinity,
-      color: AppColors.ink,
-      child: ContentContainer(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: wide ? 96 : 64),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Let's work together.",
-                style: AppSerif.of(context).copyWith(
-                  fontSize: wide ? 52 : 36,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.paper,
-                  letterSpacing: -0.5,
-                ),
+    final links = <(String, String)>[
+      ('GitHub', PortfolioData.githubUrl),
+      ('LinkedIn', PortfolioData.linkedinUrl),
+      if (PortfolioData.twitterUrl.isNotEmpty)
+        ('Twitter', PortfolioData.twitterUrl),
+      ('Email', 'mailto:${PortfolioData.email}'),
+    ];
+
+    return ContentContainer(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 28),
+        child: Wrap(
+          spacing: 24,
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          alignment: WrapAlignment.spaceBetween,
+          children: [
+            Text(
+              '© ${DateTime.now().year} ${PortfolioData.name}. All rights reserved.',
+              style: monoLabel(context).copyWith(
+                letterSpacing: 0.6,
+                color: AppColors.muted,
               ),
-              const SizedBox(height: 20),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 560),
-                child: const Text(
-                  'Open to Flutter roles, contract work, and interesting '
-                  'problems in mobile and AI. The fastest way to reach me '
-                  'is email.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    height: 1.65,
-                    color: Color(0xFFB8B2A4),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 40),
-              Wrap(
-                spacing: 28,
-                runSpacing: 12,
-                children: const [
-                  _FooterLink(
-                    label: 'mohammadg248015@gmail.com',
-                    url: 'mailto:${PortfolioData.email}',
-                  ),
-                  _FooterLink(label: 'GitHub ↗', url: PortfolioData.githubUrl),
-                  _FooterLink(
-                    label: 'LinkedIn ↗',
-                    url: PortfolioData.linkedinUrl,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 72),
-              const Divider(height: 1, thickness: 1, color: Color(0xFF3B372C)),
-              const SizedBox(height: 24),
-              Wrap(
-                spacing: 16,
-                runSpacing: 8,
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '© ${DateTime.now().year} ${PortfolioData.name}',
-                    style: const TextStyle(
-                      color: Color(0xFF8C8676),
-                      fontSize: 13,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (var i = 0; i < links.length; i++) ...[
+                  if (i > 0)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text('/',
+                          style: monoLabel(context)
+                              .copyWith(color: AppColors.faint)),
                     ),
-                  ),
-                  const Text(
-                    'Built with Flutter',
-                    style: TextStyle(color: Color(0xFF8C8676), fontSize: 13),
-                  ),
+                  TextLink(label: links[i].$1, url: links[i].$2),
                 ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FooterLink extends StatefulWidget {
-  final String label;
-  final String url;
-  const _FooterLink({required this.label, required this.url});
-
-  @override
-  State<_FooterLink> createState() => _FooterLinkState();
-}
-
-class _FooterLinkState extends State<_FooterLink> {
-  bool _hovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: () => openUrl(widget.url),
-        child: Text(
-          widget.label,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: _hovered ? const Color(0xFF9FC9B4) : AppColors.paper,
-            decoration: TextDecoration.underline,
-            decorationColor:
-                _hovered ? const Color(0xFF9FC9B4) : const Color(0xFF5C5747),
-          ),
+                const SizedBox(width: 16),
+                Container(width: 26, height: 2.5, color: AppColors.accent),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Editorial "printed page" palette — warm paper, ink, one restrained
-/// evergreen accent. No gradients, no glow.
+/// Minimal Swiss-editorial palette: warm off-white, near-black ink,
+/// hairline rules, one yellow accent.
 class AppColors {
-  static const Color paper = Color(0xFFFAF8F3);
-  static const Color card = Color(0xFFFFFFFF);
-  static const Color ink = Color(0xFF211D14);
-  static const Color muted = Color(0xFF6E6859);
-  static const Color faint = Color(0xFFA39C8B);
-  static const Color line = Color(0xFFE4DECF);
-  static const Color accent = Color(0xFF175C44);
-  static const Color accentSoft = Color(0xFFE7F0EB);
+  static const Color paper = Color(0xFFF3F1EA);
+  static const Color card = Color(0xFFF8F7F2);
+  static const Color ink = Color(0xFF17150F);
+  static const Color muted = Color(0xFF6F6A5D);
+  static const Color faint = Color(0xFFA39D8D);
+  static const Color line = Color(0xFFDDD8C8);
+  static const Color accent = Color(0xFFE8B81B);
 }
 
 class AppTheme {
   static ThemeData get light {
     final base = ThemeData.light(useMaterial3: true);
 
-    final serif = GoogleFonts.fraunces();
     final textTheme = GoogleFonts.interTextTheme(base.textTheme).apply(
       bodyColor: AppColors.ink,
       displayColor: AppColors.ink,
@@ -29,32 +27,45 @@ class AppTheme {
       textTheme: textTheme,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.accent,
-        primary: AppColors.accent,
+        primary: AppColors.ink,
         surface: AppColors.paper,
         brightness: Brightness.light,
       ),
       dividerColor: AppColors.line,
-      splashFactory: InkSparkle.splashFactory,
       textSelectionTheme: const TextSelectionThemeData(
-        cursorColor: AppColors.accent,
+        cursorColor: AppColors.ink,
       ),
-      extensions: [AppSerif(serif)],
+      extensions: [AppDisplay(GoogleFonts.archivo()), AppMono(GoogleFonts.ibmPlexMono())],
     );
   }
 }
 
-/// Carries the display serif family so widgets can opt into it without
-/// rebuilding the text theme.
-class AppSerif extends ThemeExtension<AppSerif> {
+/// Grotesque display face for headlines and titles.
+class AppDisplay extends ThemeExtension<AppDisplay> {
   final TextStyle base;
-  const AppSerif(this.base);
+  const AppDisplay(this.base);
 
   static TextStyle of(BuildContext context) =>
-      Theme.of(context).extension<AppSerif>()!.base;
+      Theme.of(context).extension<AppDisplay>()!.base;
 
   @override
-  AppSerif copyWith({TextStyle? base}) => AppSerif(base ?? this.base);
+  AppDisplay copyWith({TextStyle? base}) => AppDisplay(base ?? this.base);
 
   @override
-  AppSerif lerp(ThemeExtension<AppSerif>? other, double t) => this;
+  AppDisplay lerp(ThemeExtension<AppDisplay>? other, double t) => this;
+}
+
+/// Monospace face for labels, metadata and code snippets.
+class AppMono extends ThemeExtension<AppMono> {
+  final TextStyle base;
+  const AppMono(this.base);
+
+  static TextStyle of(BuildContext context) =>
+      Theme.of(context).extension<AppMono>()!.base;
+
+  @override
+  AppMono copyWith({TextStyle? base}) => AppMono(base ?? this.base);
+
+  @override
+  AppMono lerp(ThemeExtension<AppMono>? other, double t) => this;
 }

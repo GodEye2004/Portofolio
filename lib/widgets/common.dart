@@ -7,7 +7,7 @@ import '../theme/app_theme.dart';
 class ContentContainer extends StatelessWidget {
   final Widget child;
   final double maxWidth;
-  const ContentContainer({super.key, required this.child, this.maxWidth = 920});
+  const ContentContainer({super.key, required this.child, this.maxWidth = 1240});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ContentContainer extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 28),
           child: child,
         ),
       ),
@@ -23,64 +23,49 @@ class ContentContainer extends StatelessWidget {
   }
 }
 
-/// Numbered, letter-spaced section label with a hairline rule —
-/// the running header of the page, like a printed document.
-class SectionHeading extends StatelessWidget {
-  final String number;
+/// Uppercase monospace section label with a short dash and a
+/// trailing hairline — the running header of the page.
+class SectionLabel extends StatelessWidget {
   final String label;
-  const SectionHeading({super.key, required this.number, required this.label});
+  const SectionLabel(this.label, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Row(
-          children: [
-            Text(
-              number,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 2.4,
-                color: AppColors.accent,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Flexible(
-              child: Text(
-                label.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 2.4,
-                  color: AppColors.muted,
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-            const Expanded(child: Divider(height: 1, thickness: 1)),
-          ],
+        Flexible(
+          child: Text(
+            label.toUpperCase(),
+            style: monoLabel(context).copyWith(color: AppColors.ink),
+          ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(width: 16),
+        const Expanded(child: Divider(height: 1, thickness: 1)),
       ],
     );
   }
 }
 
-/// An underlined text link with a subtle hover state — the only
-/// "button" style on the page.
+/// Small uppercase monospace label used for eyebrows and metadata.
+TextStyle monoLabel(BuildContext context) => AppMono.of(context).copyWith(
+      fontSize: 11.5,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 1.6,
+      color: AppColors.muted,
+    );
+
+/// A monospace text link that shows an accent underline on hover.
 class TextLink extends StatefulWidget {
   final String label;
   final String url;
+  final VoidCallback? onTap;
   final double fontSize;
-  final FontWeight fontWeight;
   const TextLink({
     super.key,
     required this.label,
-    required this.url,
-    this.fontSize = 15,
-    this.fontWeight = FontWeight.w500,
+    this.url = '',
+    this.onTap,
+    this.fontSize = 12,
   });
 
   @override
@@ -97,16 +82,24 @@ class _TextLinkState extends State<TextLink> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
-        onTap: () => openUrl(widget.url),
-        child: Text(
-          widget.label,
-          style: TextStyle(
-            fontSize: widget.fontSize,
-            fontWeight: widget.fontWeight,
-            color: _hovered ? AppColors.accent : AppColors.ink,
-            decoration: TextDecoration.underline,
-            decorationColor: _hovered ? AppColors.accent : AppColors.faint,
-            decorationThickness: 1,
+        onTap: widget.onTap ?? () => openUrl(widget.url),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: _hovered ? AppColors.accent : Colors.transparent,
+                width: 2,
+              ),
+            ),
+          ),
+          child: Text(
+            widget.label,
+            style: AppMono.of(context).copyWith(
+              fontSize: widget.fontSize,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.4,
+              color: AppColors.ink,
+            ),
           ),
         ),
       ),
@@ -124,8 +117,8 @@ Future<void> openUrl(String url) async {
 
 /// True when the layout should switch to a wider, multi-column style.
 bool isWideScreen(BuildContext context) =>
-    MediaQuery.of(context).size.width >= 760;
+    MediaQuery.of(context).size.width >= 900;
 
 /// Generous vertical section spacing on desktop, tighter on mobile.
 double sectionPadding(BuildContext context) =>
-    isWideScreen(context) ? 88 : 56;
+    isWideScreen(context) ? 64 : 44;
