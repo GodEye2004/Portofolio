@@ -1,1 +1,0 @@
- /home/ubuntu/repos/Portofolio/lib/l10n/app_localizations_en.dart /home/ubuntu/repos/Portofolio/lib/l10n/app_localizations.dart:  /home/ubuntu/repos/Portofolio/l10n.yaml /home/ubuntu/repos/Portofolio/lib/l10n/app_en.arb
