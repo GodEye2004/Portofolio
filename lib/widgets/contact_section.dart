@@ -14,7 +14,7 @@ class ContactSection extends StatelessWidget {
       color: AppColors.ink,
       child: ContentContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 96),
+          padding: EdgeInsets.symmetric(vertical: wide ? 96 : 64),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -60,15 +60,16 @@ class ContactSection extends StatelessWidget {
               const SizedBox(height: 72),
               const Divider(height: 1, thickness: 1, color: Color(0xFF3B372C)),
               const SizedBox(height: 24),
-              Row(
+              Wrap(
+                spacing: 16,
+                runSpacing: 8,
+                alignment: WrapAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Text(
-                      '© ${DateTime.now().year} ${PortfolioData.name}',
-                      style: const TextStyle(
-                        color: Color(0xFF8C8676),
-                        fontSize: 13,
-                      ),
+                  Text(
+                    '© ${DateTime.now().year} ${PortfolioData.name}',
+                    style: const TextStyle(
+                      color: Color(0xFF8C8676),
+                      fontSize: 13,
                     ),
                   ),
                   const Text(

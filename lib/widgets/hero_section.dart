@@ -13,7 +13,8 @@ class HeroSection extends StatelessWidget {
 
     return ContentContainer(
       child: Padding(
-        padding: EdgeInsets.only(top: wide ? 96 : 64, bottom: 88),
+        padding: EdgeInsets.only(
+            top: wide ? 96 : 56, bottom: wide ? 88 : 56),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -25,13 +26,15 @@ class HeroSection extends StatelessWidget {
                   color: AppColors.accent,
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  PortfolioData.location.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 2.0,
-                    color: AppColors.muted,
+                Flexible(
+                  child: Text(
+                    PortfolioData.location.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 2.0,
+                      color: AppColors.muted,
+                    ),
                   ),
                 ),
               ],

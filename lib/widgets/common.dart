@@ -47,13 +47,15 @@ class SectionHeading extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Text(
-              label.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 2.4,
-                color: AppColors.muted,
+            Flexible(
+              child: Text(
+                label.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 2.4,
+                  color: AppColors.muted,
+                ),
               ),
             ),
             const SizedBox(width: 16),
@@ -123,3 +125,7 @@ Future<void> openUrl(String url) async {
 /// True when the layout should switch to a wider, multi-column style.
 bool isWideScreen(BuildContext context) =>
     MediaQuery.of(context).size.width >= 760;
+
+/// Generous vertical section spacing on desktop, tighter on mobile.
+double sectionPadding(BuildContext context) =>
+    isWideScreen(context) ? 88 : 56;

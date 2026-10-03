@@ -10,7 +10,7 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ContentContainer(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 88),
+        padding: EdgeInsets.only(bottom: sectionPadding(context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,7 +41,7 @@ class ExperienceSection extends StatelessWidget {
     final wide = isWideScreen(context);
     return ContentContainer(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 88),
+        padding: EdgeInsets.only(bottom: sectionPadding(context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

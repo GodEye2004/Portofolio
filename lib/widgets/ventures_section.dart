@@ -13,7 +13,7 @@ class VenturesSection extends StatelessWidget {
       color: AppColors.accentSoft,
       child: ContentContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 88),
+          padding: EdgeInsets.symmetric(vertical: sectionPadding(context)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

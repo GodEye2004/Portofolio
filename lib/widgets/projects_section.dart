@@ -11,7 +11,7 @@ class ProjectsSection extends StatelessWidget {
     final wide = isWideScreen(context);
     return ContentContainer(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 88),
+        padding: EdgeInsets.symmetric(vertical: sectionPadding(context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
