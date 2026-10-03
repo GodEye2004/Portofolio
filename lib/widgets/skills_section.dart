@@ -8,74 +8,73 @@ class SkillsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wide = isWideScreen(context);
     return Container(
       width: double.infinity,
-      color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(vertical: 72),
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.line, width: 1)),
+      ),
       child: ContentContainer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SectionTitle(
-              title: 'Skills & Tech Stack',
-              subtitle: 'Tools I use across the web, backend and mobile.',
-            ),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: PortfolioData.skillGroups
-                  .map((group) => _SkillGroupCard(group: group))
-                  .toList(),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 88),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionHeading(number: '04', label: 'Toolbox'),
+              for (var i = 0; i < PortfolioData.skillGroups.length; i++) ...[
+                if (i > 0)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Divider(height: 1, thickness: 1),
+                  ),
+                _SkillRow(group: PortfolioData.skillGroups[i], wide: wide),
+              ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _SkillGroupCard extends StatelessWidget {
+class _SkillRow extends StatelessWidget {
   final SkillGroup group;
-  const _SkillGroupCard({required this.group});
+  final bool wide;
+  const _SkillRow({required this.group, required this.wide});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 260,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceAlt,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
+    final title = Text(
+      group.title.toUpperCase(),
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1.8,
+        color: AppColors.muted,
       ),
-      child: Column(
+    );
+    final skills = Text(
+      group.skills.join('   ·   '),
+      style: const TextStyle(
+        fontSize: 15.5,
+        height: 1.6,
+        color: AppColors.ink,
+      ),
+    );
+
+    if (!wide) {
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            group.title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.accentAlt,
-                ),
-          ),
-          const SizedBox(height: 14),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: group.skills
-                .map((skill) => Chip(
-                      label: Text(skill),
-                      backgroundColor: AppColors.background,
-                      labelStyle: const TextStyle(
-                        color: AppColors.textPrimary,
-                        fontSize: 13,
-                      ),
-                      side: const BorderSide(color: AppColors.border),
-                    ))
-                .toList(),
-          ),
-        ],
-      ),
+        children: [title, const SizedBox(height: 8), skills],
+      );
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(width: 200, child: title),
+        const SizedBox(width: 48),
+        Expanded(child: skills),
+      ],
     );
   }
 }

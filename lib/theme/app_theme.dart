@@ -1,40 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Editorial "printed page" palette — warm paper, ink, one restrained
+/// evergreen accent. No gradients, no glow.
 class AppColors {
-  static const Color background = Color(0xFF0B0F19);
-  static const Color surface = Color(0xFF141A2A);
-  static const Color surfaceAlt = Color(0xFF1B2338);
-  static const Color accent = Color(0xFF6C8CFF);
-  static const Color accentAlt = Color(0xFF7CF5D0);
-  static const Color textPrimary = Color(0xFFF3F5FA);
-  static const Color textSecondary = Color(0xFFA7AFC2);
-  static const Color border = Color(0xFF262E44);
-
-  static const LinearGradient heroGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0xFF6C8CFF), Color(0xFF7CF5D0)],
-  );
+  static const Color paper = Color(0xFFFAF8F3);
+  static const Color card = Color(0xFFFFFFFF);
+  static const Color ink = Color(0xFF211D14);
+  static const Color muted = Color(0xFF6E6859);
+  static const Color faint = Color(0xFFA39C8B);
+  static const Color line = Color(0xFFE4DECF);
+  static const Color accent = Color(0xFF175C44);
+  static const Color accentSoft = Color(0xFFE7F0EB);
 }
 
 class AppTheme {
-  static ThemeData get dark {
-    final base = ThemeData.dark(useMaterial3: true);
+  static ThemeData get light {
+    final base = ThemeData.light(useMaterial3: true);
+
+    final serif = GoogleFonts.fraunces();
     final textTheme = GoogleFonts.interTextTheme(base.textTheme).apply(
-      bodyColor: AppColors.textPrimary,
-      displayColor: AppColors.textPrimary,
+      bodyColor: AppColors.ink,
+      displayColor: AppColors.ink,
     );
 
     return base.copyWith(
-      scaffoldBackgroundColor: AppColors.background,
+      scaffoldBackgroundColor: AppColors.paper,
       textTheme: textTheme,
-      colorScheme: base.colorScheme.copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.accent,
         primary: AppColors.accent,
-        secondary: AppColors.accentAlt,
-        surface: AppColors.surface,
+        surface: AppColors.paper,
+        brightness: Brightness.light,
       ),
-      dividerColor: AppColors.border,
+      dividerColor: AppColors.line,
+      splashFactory: InkSparkle.splashFactory,
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.accent,
+      ),
+      extensions: [AppSerif(serif)],
     );
   }
+}
+
+/// Carries the display serif family so widgets can opt into it without
+/// rebuilding the text theme.
+class AppSerif extends ThemeExtension<AppSerif> {
+  final TextStyle base;
+  const AppSerif(this.base);
+
+  static TextStyle of(BuildContext context) =>
+      Theme.of(context).extension<AppSerif>()!.base;
+
+  @override
+  AppSerif copyWith({TextStyle? base}) => AppSerif(base ?? this.base);
+
+  @override
+  AppSerif lerp(ThemeExtension<AppSerif>? other, double t) => this;
 }

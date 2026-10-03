@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../data/portfolio_data.dart';
 import '../theme/app_theme.dart';
 import 'common.dart';
@@ -10,34 +9,35 @@ class ProjectsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wide = isWideScreen(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 72),
-      child: ContentContainer(
+    return ContentContainer(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 88),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SectionTitle(
-              title: 'Experience & Work',
-              subtitle: 'A few things I\'ve built recently.',
-            ),
+            const SectionHeading(number: '05', label: 'Selected Projects'),
             LayoutBuilder(
               builder: (context, constraints) {
+                final columnWidth =
+                    wide ? (constraints.maxWidth - 64) / 2 : constraints.maxWidth;
                 return Wrap(
-                  spacing: 20,
-                  runSpacing: 20,
+                  spacing: 64,
+                  runSpacing: 56,
                   children: PortfolioData.projects
                       .map(
                         (p) => SizedBox(
-                          width: wide
-                              ? (constraints.maxWidth - 40) / 3
-                              : constraints.maxWidth,
-                          child: _ProjectCard(project: p),
+                          width: columnWidth,
+                          child: _ProjectEntry(project: p),
                         ),
                       )
                       .toList(),
                 );
               },
+            ),
+            const SizedBox(height: 56),
+            const TextLink(
+              label: 'Everything else on GitHub ↗',
+              url: PortfolioData.githubUrl,
             ),
           ],
         ),
@@ -46,78 +46,59 @@ class ProjectsSection extends StatelessWidget {
   }
 }
 
-class _ProjectCard extends StatelessWidget {
+class _ProjectEntry extends StatelessWidget {
   final Project project;
-  const _ProjectCard({required this.project});
-
-  Future<void> _open(String url) async {
-    if (url.isEmpty) return;
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
-  }
+  const _ProjectEntry({required this.project});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            project.title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () => openUrl(project.url),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: Text(
+                    project.title,
+                    style: AppSerif.of(context).copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            project.description,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondary,
-                  height: 1.45,
+                const Text(
+                  '↗',
+                  style: TextStyle(fontSize: 16, color: AppColors.accent),
                 ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: project.tags
-                .map((t) => Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: AppColors.surfaceAlt,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        t,
-                        style: const TextStyle(
-                            fontSize: 12, color: AppColors.accentAlt),
-                      ),
-                    ))
-                .toList(),
-          ),
-          if (project.url.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            TextButton.icon(
-              onPressed: () => _open(project.url),
-              icon: const Icon(Icons.arrow_outward_rounded, size: 16),
-              label: const Text('View project'),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.accent,
-                padding: EdgeInsets.zero,
-              ),
+              ],
             ),
-          ],
-        ],
-      ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          project.description,
+          style: const TextStyle(
+            fontSize: 15,
+            height: 1.6,
+            color: AppColors.muted,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          project.tags.join('  ·  '),
+          style: const TextStyle(
+            fontSize: 12.5,
+            letterSpacing: 0.6,
+            color: AppColors.faint,
+          ),
+        ),
+      ],
     );
   }
 }

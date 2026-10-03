@@ -1,11 +1,11 @@
 {
-    "name": "flutter_application_1",
-    "short_name": "flutter_application_1",
+    "name": "Mohammad Mahdi Maghsodlu — Portfolio",
+    "short_name": "M. Maghsodlu",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FAF8F3",
+    "theme_color": "#175C44",
+    "description": "Flutter & Dart developer building cross-platform apps and AI-powered products.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
