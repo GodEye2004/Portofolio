@@ -34,7 +34,6 @@ class PortfolioData {
       index: '01 / 03',
       title: 'RIVIUM TRACE',
       tags: ['OBSERVABILITY', 'CRASH REPORTING', 'FLUTTER'],
-      image: 'assets/images/work_rivium.png',
       description:
           'Rivium Trace is a production-ready observability and crash '
           'reporting platform for mobile and backend applications. Built '
@@ -46,7 +45,6 @@ class PortfolioData {
       index: '02 / 03',
       title: 'HOMENGER',
       tags: ['AI REAL-ESTATE INTELLIGENCE', 'DATA PLATFORM'],
-      image: 'assets/images/work_homeenger.png',
       description:
           'An AI-powered real-estate platform for Iran. From data scraping '
           'to intelligent recommendations, Homeenger helps users find '
@@ -57,7 +55,6 @@ class PortfolioData {
       index: '03 / 03',
       title: 'MINASHOPS',
       tags: ['COMMERCE', 'PAYMENTS', 'FULL-STACK'],
-      image: 'assets/images/work_minaskill.png',
       description:
           'An online learning platform for sewing courses with modern '
           'e-commerce and payment infrastructure. Built with Next.js, '
@@ -131,14 +128,12 @@ class WorkItem {
   final String index;
   final String title;
   final List<String> tags;
-  final String image;
   final String description;
   final String url;
   const WorkItem({
     required this.index,
     required this.title,
     required this.tags,
-    required this.image,
     required this.description,
     required this.url,
   });

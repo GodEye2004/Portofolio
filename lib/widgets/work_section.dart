@@ -28,7 +28,7 @@ class WorkSection extends StatelessWidget {
                     for (var i = 0; i < PortfolioData.work.length; i++) ...[
                       if (i > 0) const SizedBox(width: 44),
                       Expanded(
-                        child: _WorkCard(item: PortfolioData.work[i], wide: true),
+                        child: _WorkCard(item: PortfolioData.work[i]),
                       ),
                     ],
                   ],
@@ -38,7 +38,7 @@ class WorkSection extends StatelessWidget {
                   children: [
                     for (var i = 0; i < PortfolioData.work.length; i++) ...[
                       if (i > 0) const SizedBox(height: 48),
-                      _WorkCard(item: PortfolioData.work[i], wide: false),
+                      _WorkCard(item: PortfolioData.work[i]),
                     ],
                   ],
                 ),
@@ -52,19 +52,15 @@ class WorkSection extends StatelessWidget {
 
 class _WorkCard extends StatelessWidget {
   final WorkItem item;
-  final bool wide;
-  const _WorkCard({required this.item, required this.wide});
+  const _WorkCard({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final image = AspectRatio(
-      aspectRatio: wide ? 1 : 16 / 9,
-      child: Image.asset(item.image, fit: BoxFit.cover),
-    );
-
-    final text = Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(height: 1, thickness: 1, color: AppColors.line),
+        const SizedBox(height: 22),
         Text(item.index, style: monoLabel(context).copyWith(color: AppColors.faint)),
         const SizedBox(height: 10),
         Text(
@@ -97,21 +93,6 @@ class _WorkCard extends StatelessWidget {
         const SizedBox(height: 16),
         TextLink(label: 'VIEW PROJECT →', url: item.url),
       ],
-    );
-
-    if (wide) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(flex: 11, child: image),
-          const SizedBox(width: 18),
-          Expanded(flex: 10, child: text),
-        ],
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [image, const SizedBox(height: 18), text],
     );
   }
 }
