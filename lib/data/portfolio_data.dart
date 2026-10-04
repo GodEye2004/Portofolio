@@ -73,7 +73,7 @@ class PortfolioData {
 
   // ---- Journey ----------------------------------------------------------
   static const List<JourneyStep> journey = [
-    JourneyStep(year: '2013', title: 'Started programming', note: 'at age 8'),
+    JourneyStep(year: '2018', title: 'Started programming', note: 'at age 13'),
     JourneyStep(
       year: '2021',
       title: 'Computer Engineering',
@@ -93,7 +93,7 @@ class PortfolioData {
     JourneyStep(
       year: '2025',
       title: 'Current Role',
-      note: 'Real Software Engineer',
+      note: 'Software Engineer',
     ),
   ];
 
