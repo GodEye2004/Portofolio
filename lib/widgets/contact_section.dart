@@ -29,10 +29,9 @@ class ContactSection extends StatelessWidget {
           children: [
             Text(
               '© ${DateTime.now().year} ${PortfolioData.name}. All rights reserved.',
-              style: monoLabel(context).copyWith(
-                letterSpacing: 0.6,
-                color: AppColors.muted,
-              ),
+              style: monoLabel(
+                context,
+              ).copyWith(letterSpacing: 0.6, color: AppColors.muted),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -41,9 +40,12 @@ class ContactSection extends StatelessWidget {
                   if (i > 0)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('/',
-                          style: monoLabel(context)
-                              .copyWith(color: AppColors.faint)),
+                      child: Text(
+                        '/',
+                        style: monoLabel(
+                          context,
+                        ).copyWith(color: AppColors.faint),
+                      ),
                     ),
                   TextLink(label: links[i].$1, url: links[i].$2),
                 ],

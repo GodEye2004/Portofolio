@@ -8,8 +8,7 @@ class PortfolioData {
   static const String name = 'Mohammad Mahdi';
   static const String fullName = 'Mohammad Mahdi Maghsodlu';
   static const String eyebrow = "HI, I'M MOHAMMAD MAHDI";
-  static const String headline =
-      'I build software that\nsurvives production.';
+  static const String headline = 'I build software that\nsurvives production.';
   static const String intro =
       'Software Engineer building products, infrastructure, and developer '
       'tools. From mobile systems to backend architecture, observability, '
@@ -67,32 +66,35 @@ class PortfolioData {
   static const List<String> stats = [
     'SOFTWARE ENGINEER',
     'PRODUCT BUILDER',
-    '8+ YEARS CODING',
+    '13+ YEARS CODING',
     'PRODUCTION SYSTEMS',
   ];
   static const String statsRight = 'TECHNOLOGY / PRODUCTS / PEOPLE';
 
   // ---- Journey ----------------------------------------------------------
   static const List<JourneyStep> journey = [
-    JourneyStep(year: '2018', title: 'Started programming', note: 'at age 13'),
+    JourneyStep(year: '2013', title: 'Started programming', note: 'at age 8'),
     JourneyStep(
-        year: '2021',
-        title: 'Computer Engineering',
-        note: 'Islamic Azad University'),
+      year: '2021',
+      title: 'Computer Engineering',
+      note: 'Islamic Azad University',
+    ),
+    JourneyStep(year: '2022', title: 'Head of Tech', note: 'Startup — Gorgan'),
     JourneyStep(
-        year: '2022', title: 'Head of Tech', note: 'Startup — Gorgan'),
+      year: '2023',
+      title: 'International Company',
+      note: 'Software Engineer',
+    ),
     JourneyStep(
-        year: '2023',
-        title: 'International Company',
-        note: 'Software Engineer'),
+      year: '2024',
+      title: 'Science & Technology Park',
+      note: '4 years',
+    ),
     JourneyStep(
-        year: '2024',
-        title: 'Science & Technology Park',
-        note: '4 years'),
-    JourneyStep(
-        year: '2025',
-        title: 'Current Role',
-        note: 'Real Software Engineer'),
+      year: '2025',
+      title: 'Current Role',
+      note: 'Real Software Engineer',
+    ),
   ];
 
   // ---- What I care about ------------------------------------------------
@@ -112,14 +114,12 @@ class PortfolioData {
     CareItem(
       icon: Icons.psychology_outlined,
       title: 'AI Systems',
-      description:
-          'Building intelligent systems that actually solve problems.',
+      description: 'Building intelligent systems that actually solve problems.',
     ),
     CareItem(
       icon: Icons.groups_outlined,
       title: 'Developer Experience',
-      description:
-          'Better tools, smoother workflows, happier developers.',
+      description: 'Better tools, smoother workflows, happier developers.',
     ),
   ];
 }

@@ -7,7 +7,11 @@ import '../theme/app_theme.dart';
 class ContentContainer extends StatelessWidget {
   final Widget child;
   final double maxWidth;
-  const ContentContainer({super.key, required this.child, this.maxWidth = 1240});
+  const ContentContainer({
+    super.key,
+    required this.child,
+    this.maxWidth = 1240,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +52,11 @@ class SectionLabel extends StatelessWidget {
 
 /// Small uppercase monospace label used for eyebrows and metadata.
 TextStyle monoLabel(BuildContext context) => AppMono.of(context).copyWith(
-      fontSize: 11.5,
-      fontWeight: FontWeight.w500,
-      letterSpacing: 1.6,
-      color: AppColors.muted,
-    );
+  fontSize: 11.5,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 1.6,
+  color: AppColors.muted,
+);
 
 /// A monospace text link that shows an accent underline on hover.
 class TextLink extends StatefulWidget {
@@ -120,5 +124,4 @@ bool isWideScreen(BuildContext context) =>
     MediaQuery.of(context).size.width >= 900;
 
 /// Generous vertical section spacing on desktop, tighter on mobile.
-double sectionPadding(BuildContext context) =>
-    isWideScreen(context) ? 64 : 44;
+double sectionPadding(BuildContext context) => isWideScreen(context) ? 64 : 44;
