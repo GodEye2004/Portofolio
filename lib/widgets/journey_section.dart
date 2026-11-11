@@ -137,6 +137,43 @@ class _Journey extends StatelessWidget {
                                 color: AppColors.muted,
                               ),
                             ),
+                            if (steps[i].highlights.isNotEmpty) ...[
+                              const SizedBox(height: 10),
+                              for (final highlight in steps[i].highlights)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 8,
+                                          right: 10,
+                                        ),
+                                        child: Container(
+                                          width: 5,
+                                          height: 5,
+                                          decoration: const BoxDecoration(
+                                            color: AppColors.accent,
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          highlight,
+                                          style: TextStyle(
+                                            fontSize: wide ? 13 : 12,
+                                            height: 1.5,
+                                            color: AppColors.ink,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ],
                           ],
                         ),
                       ),

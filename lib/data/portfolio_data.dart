@@ -41,16 +41,16 @@ class PortfolioData {
           'alerting and performance insights.',
       url: 'https://rivium.co/cloud/rivium-trace',
     ),
-    WorkItem(
-      index: '02 / 03',
-      title: 'HOMENGER',
-      tags: ['AI REAL-ESTATE INTELLIGENCE', 'DATA PLATFORM'],
-      description:
-          'An AI-powered real-estate platform for Iran. From data scraping '
-          'to intelligent recommendations, Homeenger helps users find '
-          'better housing with AI agents and advanced data pipelines.',
-      url: 'https://homeenger.com',
-    ),
+    // WorkItem(
+    //   index: '02 / 03',
+    //   title: 'HOMENGER',
+    //   tags: ['AI REAL-ESTATE INTELLIGENCE', 'DATA PLATFORM'],
+    //   description:
+    //       'An AI-powered real-estate platform for Iran. From data scraping '
+    //       'to intelligent recommendations, Homeenger helps users find '
+    //       'better housing with AI agents and advanced data pipelines.',
+    //   url: 'https://homeenger.com',
+    // ),
     WorkItem(
       index: '03 / 03',
       title: 'MINASHOPS',
@@ -152,7 +152,7 @@ class PortfolioData {
     JourneyStep(
       period: '2025–Present',
       title: 'Product Engineering & AI Systems',
-      organization: 'Rivium | Homeenger | Personal Products',
+      organization: 'Rivium  | Personal Products',
       category: 'ENGINEERING',
       description:
           'Building production-grade products across product strategy, '
