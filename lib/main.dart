@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'data/portfolio_data.dart';
+import 'pages/contact_page.dart';
 import 'theme/app_theme.dart';
 import 'widgets/site_header.dart';
 import 'widgets/hero_section.dart';
@@ -21,6 +22,7 @@ class PortfolioApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       home: const PortfolioPage(),
+      routes: {'/contact': (_) => const ContactPage()},
     );
   }
 }
@@ -54,23 +56,27 @@ class _PortfolioPageState extends State<PortfolioPage> {
       NavTarget('WORK', key: _workKey, active: true),
       NavTarget('ABOUT', key: _aboutKey),
       NavTarget('NOTES', url: PortfolioData.linkedinUrl),
-      NavTarget('CONTACT', key: _contactKey),
+      NavTarget('CONTACT', routeName: '/contact'),
     ];
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SiteHeader(targets: targets),
-            HeroSection(
-              onAboutTap: () => _scrollTo(_aboutKey),
-              onWorkTap: () => _scrollTo(_workKey),
-            ),
-            WorkSection(key: _workKey),
-            const StatsStrip(),
-            JourneySection(key: _aboutKey),
-            ContactSection(key: _contactKey),
-          ],
+      body: SafeArea(
+        top: true,
+        bottom: true,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SiteHeader(targets: targets),
+              HeroSection(
+                onAboutTap: () => _scrollTo(_aboutKey),
+                onWorkTap: () => _scrollTo(_workKey),
+              ),
+              WorkSection(key: _workKey),
+              const StatsStrip(),
+              JourneySection(key: _aboutKey),
+              ContactSection(key: _contactKey),
+            ],
+          ),
         ),
       ),
     );

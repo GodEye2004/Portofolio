@@ -25,7 +25,8 @@ class PortfolioData {
   static const String linkedinUrl =
       'https://www.linkedin.com/in/mohammad-mahdi-maghsodlu/';
   static const String twitterUrl = '';
-  static const String email = 'mohammadg248015@gmail.com';
+  static const String email = 'mohammadmaqsodlu@gmail.com';
+  static const String phone = '989113690717';
 
   // ---- Selected work ----------------------------------------------------
   static const List<WorkItem> work = [
@@ -66,34 +67,110 @@ class PortfolioData {
   static const List<String> stats = [
     'SOFTWARE ENGINEER',
     'PRODUCT BUILDER',
-    '13+ YEARS CODING',
+    '8+ YEARS CODING',
     'PRODUCTION SYSTEMS',
   ];
   static const String statsRight = 'TECHNOLOGY / PRODUCTS / PEOPLE';
 
   // ---- Journey ----------------------------------------------------------
   static const List<JourneyStep> journey = [
-    JourneyStep(year: '2018', title: 'Started programming', note: 'at age 13'),
     JourneyStep(
-      year: '2021',
+      period: '2018',
+      title: 'The Beginning',
+      organization: 'Personal Journey',
+      category: 'START',
+      description:
+          'Started programming at the age of 13. '
+          'What began as curiosity gradually became '
+          'a long-term passion for software engineering.',
+      highlights: [
+        'First steps into programming',
+        'Built early projects and experiments',
+      ],
+    ),
+
+    JourneyStep(
+      period: '2021',
       title: 'Computer Engineering',
-      note: 'Islamic Azad University',
+      organization: 'Islamic Azad University',
+      category: 'EDUCATION',
+      description:
+          'Started my academic journey in Computer '
+          'Engineering while continuing to deepen my practical '
+          'software skills and product thinking.',
+      highlights: [
+        'Computer Engineering studies',
+        'Connecting theory with real-world building',
+      ],
     ),
-    JourneyStep(year: '2022', title: 'Head of Tech', note: 'Startup — Gorgan'),
+
     JourneyStep(
-      year: '2023',
-      title: 'International Company',
-      note: 'Software Engineer',
+      period: '2022',
+      title: 'Software Engineer',
+      organization: 'International Company',
+      category: 'CAREER',
+      description:
+          'Entered an international professional '
+          'environment and expanded my experience '
+          'in building software systems.',
+      highlights: [
+        'Professional engineering experience',
+        'Working with production software',
+      ],
     ),
+
     JourneyStep(
-      year: '2024',
-      title: 'Science & Technology Park',
-      note: '4 years',
+      period: '2023',
+      title: 'Head of Technology',
+      organization: 'Startup · Gorgan',
+      category: 'LEADERSHIP',
+      description:
+          'Moved into a technical leadership position, '
+          'taking responsibility for technical direction '
+          'and engineering decisions.',
+      highlights: [
+        'Technical decision-making',
+        'Software architecture',
+        'Startup technology development',
+      ],
     ),
+
     JourneyStep(
-      year: '2025',
-      title: 'Current Role',
-      note: 'Software Engineer',
+      period: '2021–2025',
+      title: 'Technology & Innovation',
+      organization: 'Science & Technology Park',
+      category: 'EXPERIENCE',
+      description:
+          'Four years of professional experience '
+          'in a technology-focused environment.',
+      highlights: [
+        'Professional software development',
+        'Continuous technical growth',
+      ],
+    ),
+
+    JourneyStep(
+      period: '2025–Present',
+      title: 'Product Engineering & AI Systems',
+      organization: 'Rivium | Homeenger | Personal Products',
+      category: 'ENGINEERING',
+      description:
+          'Building production-grade products across product strategy, '
+          'backend systems, observability, deployment, and AI-powered user experiences.',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'TypeScript',
+        'Python',
+        'Docker',
+        'AI & LLMs',
+      ],
+      highlights: [
+        'End-to-end product development',
+        'Reliability and observability',
+        'Technical ownership and product thinking',
+        'Shipping AI-driven experiences',
+      ],
     ),
   ];
 
@@ -140,14 +217,28 @@ class WorkItem {
 }
 
 class JourneyStep {
+  final String period;
   final String year;
-  final String title;
   final String note;
+  final String title;
+  final String organization;
+  final String description;
+  final List<String> highlights;
+  final List<String> technologies;
+  final String category;
+
   const JourneyStep({
-    required this.year,
+    required this.period,
     required this.title,
-    required this.note,
-  });
+    required this.organization,
+    required this.description,
+    this.highlights = const [],
+    this.technologies = const [],
+    required this.category,
+    String? year,
+    String? note,
+  }) : year = year ?? period,
+       note = note ?? description;
 }
 
 class CareItem {

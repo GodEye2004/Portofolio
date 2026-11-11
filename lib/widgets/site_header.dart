@@ -7,8 +7,15 @@ class NavTarget {
   final String label;
   final GlobalKey? key;
   final String? url;
+  final String? routeName;
   final bool active;
-  const NavTarget(this.label, {this.key, this.url, this.active = false});
+  const NavTarget(
+    this.label, {
+    this.key,
+    this.url,
+    this.routeName,
+    this.active = false,
+  });
 }
 
 /// Monospace masthead: name on the left, nav links on the right.
@@ -42,7 +49,30 @@ class SiteHeader extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 36),
                     child: _NavButton(target: target),
+                  )
+              else
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/contact'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(999),
+                    ),
                   ),
+                  child: Text(
+                    'CONTACT',
+                    style: AppMono.of(context).copyWith(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.6,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -64,6 +94,37 @@ class _NavButtonState extends State<_NavButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.target.label.toUpperCase() == 'CONTACT') {
+      return ElevatedButton(
+        onPressed: () {
+          if (widget.target.routeName != null) {
+            Navigator.of(context).pushNamed(widget.target.routeName!);
+            return;
+          }
+          if (widget.target.url != null) {
+            openUrl(widget.target.url!);
+            return;
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.accent,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(999),
+          ),
+        ),
+        child: Text(
+          widget.target.label,
+          style: AppMono.of(context).copyWith(
+            fontSize: 11.5,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.6,
+          ),
+        ),
+      );
+    }
+
     final active = widget.target.active || _hovered;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -73,6 +134,10 @@ class _NavButtonState extends State<_NavButton> {
         onTap: () {
           if (widget.target.url != null) {
             openUrl(widget.target.url!);
+            return;
+          }
+          if (widget.target.routeName != null) {
+            Navigator.of(context).pushNamed(widget.target.routeName!);
             return;
           }
           final ctx = widget.target.key?.currentContext;

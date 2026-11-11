@@ -65,18 +65,8 @@ class HeroSection extends StatelessWidget {
     final mindset = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('// developer mindset', style: monoLabel(context)),
-        const SizedBox(height: 18),
-        Text(
-          PortfolioData.focusCode,
-          style: AppMono.of(context).copyWith(
-            fontSize: 12.5,
-            height: 1.7,
-            color: AppColors.muted,
-          ),
-        ),
-        const SizedBox(height: 28),
-        const Divider(height: 1, thickness: 1),
+        // const SizedBox(height: 28),
+        // const Divider(height: 1, thickness: 1),
         const SizedBox(height: 24),
         Text(
           PortfolioData.mindset,
@@ -97,8 +87,7 @@ class HeroSection extends StatelessWidget {
       ),
       child: ContentContainer(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: wide ? 72 : 48),
+          padding: EdgeInsets.symmetric(vertical: wide ? 72 : 48),
           child: wide
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

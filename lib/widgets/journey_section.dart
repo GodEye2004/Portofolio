@@ -23,9 +23,10 @@ class StatsStrip extends StatelessWidget {
             children: [
               for (var i = 0; i < PortfolioData.stats.length; i++) ...[
                 if (i > 0)
-                  Text('|',
-                      style:
-                          monoLabel(context).copyWith(color: AppColors.faint)),
+                  Text(
+                    '|',
+                    style: monoLabel(context).copyWith(color: AppColors.faint),
+                  ),
                 Text(PortfolioData.stats[i], style: monoLabel(context)),
               ],
               const SizedBox(width: 24),
@@ -51,7 +52,6 @@ class JourneySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wide = isWideScreen(context);
     return Container(
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.line, width: 1)),
@@ -59,23 +59,10 @@ class JourneySection extends StatelessWidget {
       child: ContentContainer(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: sectionPadding(context)),
-          child: wide
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Expanded(flex: 7, child: _Journey()),
-                    const SizedBox(width: 64),
-                    const Expanded(flex: 6, child: _CareAbout()),
-                  ],
-                )
-              : const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _Journey(),
-                    SizedBox(height: 56),
-                    _CareAbout(),
-                  ],
-                ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [_Journey(), SizedBox(height: 56), _CareAbout()],
+          ),
         ),
       ),
     );
@@ -94,109 +81,71 @@ class _Journey extends StatelessWidget {
       children: [
         const SectionLabel('MY JOURNEY'),
         const SizedBox(height: 40),
-        if (wide)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (var i = 0; i < steps.length; i++)
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const BoxDecoration(
-                              color: AppColors.ink,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          const Expanded(
-                            child:
-                                Divider(height: 1, thickness: 1, indent: 6),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      Text(steps[i].year,
-                          style: monoLabel(context)
-                              .copyWith(color: AppColors.ink)),
-                      const SizedBox(height: 6),
-                      Text(
-                        steps[i].title,
-                        style: const TextStyle(
-                            fontSize: 12.5, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        steps[i].note,
-                        style: const TextStyle(
-                            fontSize: 11.5, color: AppColors.muted),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          )
-        else
-          Column(
-            children: [
-              for (var i = 0; i < steps.length; i++)
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 7,
-                            height: 7,
-                            margin: const EdgeInsets.only(top: 5),
-                            decoration: const BoxDecoration(
-                              color: AppColors.ink,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          if (i < steps.length - 1)
-                            const Expanded(
-                              child: VerticalDivider(
-                                  width: 7, thickness: 1),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 28),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(steps[i].year, style: monoLabel(context)),
-                              const SizedBox(height: 4),
-                              Text(
-                                steps[i].title,
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                steps[i].note,
-                                style: const TextStyle(
-                                    fontSize: 12.5,
-                                    color: AppColors.muted),
-                              ),
-                            ],
+        Column(
+          children: [
+            for (var i = 0; i < steps.length; i++)
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          width: 8,
+                          height: 8,
+                          margin: const EdgeInsets.only(top: 5),
+                          decoration: const BoxDecoration(
+                            color: AppColors.ink,
+                            shape: BoxShape.circle,
                           ),
                         ),
+                        if (i < steps.length - 1)
+                          const Expanded(
+                            child: VerticalDivider(width: 8, thickness: 1),
+                          ),
+                      ],
+                    ),
+                    SizedBox(width: wide ? 20 : 16),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: wide ? 32 : 28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              steps[i].period,
+                              style: monoLabel(context).copyWith(
+                                color: AppColors.ink,
+                                fontSize: wide ? 12.5 : 11.5,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              steps[i].title,
+                              style: TextStyle(
+                                fontSize: wide ? 17 : 14,
+                                fontWeight: FontWeight.w700,
+                                height: 1.35,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              steps[i].note,
+                              style: TextStyle(
+                                fontSize: wide ? 14 : 12.5,
+                                height: 1.6,
+                                color: AppColors.muted,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-            ],
-          ),
+              ),
+          ],
+        ),
       ],
     );
   }
@@ -245,7 +194,10 @@ class _CareCell extends StatelessWidget {
         Text(
           item.description,
           style: const TextStyle(
-              fontSize: 12.5, height: 1.5, color: AppColors.muted),
+            fontSize: 12.5,
+            height: 1.5,
+            color: AppColors.muted,
+          ),
         ),
       ],
     );
